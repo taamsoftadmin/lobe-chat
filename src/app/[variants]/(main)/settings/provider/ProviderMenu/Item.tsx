@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import TaamAIIcon from '@/components/TaamAIIcon';
 import { AiProviderListItem, AiProviderSourceEnum } from '@/types/aiProvider';
 
 export const useStyles = createStyles(({ css, token }) => ({
@@ -57,6 +58,8 @@ const ProviderItem = memo<AiProviderListItem>(({ id, name, source, enabled, logo
             size={24}
             style={{ borderRadius: 6 }}
           />
+        ) : id === 'taamai' ? (
+          <TaamAIIcon size={24} style={{ borderRadius: 6 }} />
         ) : (
           <ProviderIcon provider={id} size={24} style={{ borderRadius: 6 }} type={'avatar'} />
         )}

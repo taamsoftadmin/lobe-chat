@@ -6,6 +6,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
+import TaamAIIcon from '@/components/TaamAIIcon';
 import { AiProviderListItem } from '@/types/aiProvider';
 
 import EnableSwitch from './EnableSwitch';
@@ -37,12 +38,19 @@ const ProviderCard = memo<ProviderCardProps>(
             <Flexbox gap={12} width={'100%'}>
               <Flexbox align={'center'} horizontal justify={'space-between'}>
                 {source === 'builtin' ? (
-                  <ProviderCombine
-                    provider={id}
-                    size={24}
-                    style={{ color: theme.colorText }}
-                    title={name}
-                  />
+                  id === 'taamai' ? (
+                    <Flexbox align={'center'} gap={8} horizontal>
+                      <TaamAIIcon size={24} style={{ color: theme.colorText }} />
+                      <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{name || id}</Text>
+                    </Flexbox>
+                  ) : (
+                    <ProviderCombine
+                      provider={id}
+                      size={24}
+                      style={{ color: theme.colorText }}
+                      title={name}
+                    />
+                  )
                 ) : (
                   <Flexbox align={'center'} gap={12} horizontal>
                     {logo ? (
@@ -65,7 +73,7 @@ const ProviderCard = memo<ProviderCardProps>(
                   rows: 2,
                 }}
               >
-                {source === 'custom' ? description : t(`${id}.description`)}
+                {source === 'custom' ? description : description || t(`${id}.description`)}
               </Text>
             </Flexbox>
           </Link>

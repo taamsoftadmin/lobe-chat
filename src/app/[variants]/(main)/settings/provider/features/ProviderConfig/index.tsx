@@ -21,6 +21,7 @@ import urlJoin from 'url-join';
 import { z } from 'zod';
 
 import { FormInput, FormPassword } from '@/components/FormInput';
+import TaamAIIcon from '@/components/TaamAIIcon';
 import { FORM_STYLE } from '@/const/layoutTokens';
 import { AES_GCM_URL, BASE_PROVIDER_DOC_URL } from '@/const/url';
 import { isDesktop, isServerMode } from '@/const/version';
@@ -36,6 +37,7 @@ import Checker, { CheckErrorRender } from './Checker';
 import EnableSwitch from './EnableSwitch';
 import { SkeletonInput } from './SkeletonInput';
 import UpdateProviderInfo from './UpdateProviderInfo';
+import UrlParamsHandler from './UrlParamsHandler';
 
 const useStyles = createStyles(({ css, prefixCls, responsive, token }) => ({
   aceGcm: css`
@@ -350,7 +352,12 @@ const ProviderConfig = memo<ProviderConfigProps>(
             </Flexbox>
           ) : (
             <>
-              <ProviderCombine provider={id} size={24} />
+              {id === 'taamai' ? (
+                <TaamAIIcon size={24} />
+              ) : (
+                <ProviderCombine provider={id} size={24} />
+              )}
+              {name}
               <Tooltip title={t('providerModels.config.helpDoc')}>
                 <Link
                   href={urlJoin(BASE_PROVIDER_DOC_URL, id)}
@@ -369,16 +376,19 @@ const ProviderConfig = memo<ProviderConfigProps>(
     };
 
     return (
-      <Form
-        className={cx(styles.form, className)}
-        form={form}
-        items={[model]}
-        onValuesChange={(_, values) => {
-          debouncedUpdate(id, values);
-        }}
-        variant={'borderless'}
-        {...FORM_STYLE}
-      />
+      <>
+        <UrlParamsHandler providerId={id} />
+        <Form
+          className={cx(styles.form, className)}
+          form={form}
+          items={[model]}
+          onValuesChange={(_, values) => {
+            debouncedUpdate(id, values);
+          }}
+          variant={'borderless'}
+          {...FORM_STYLE}
+        />
+      </>
     );
   },
 );

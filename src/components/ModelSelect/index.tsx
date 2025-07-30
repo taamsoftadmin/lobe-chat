@@ -15,6 +15,7 @@ import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
+import TaamAIIcon from '@/components/TaamAIIcon';
 import { ModelAbilities } from '@/types/aiModel';
 import { AiProviderSourceType } from '@/types/aiProvider';
 import { ChatModelCard } from '@/types/llm';
@@ -209,6 +210,8 @@ export const ProviderItemRender = memo<ProviderItemRenderProps>(
       <Flexbox align={'center'} gap={4} horizontal>
         {source === 'custom' && !!logo ? (
           <Avatar avatar={logo} size={20} style={{ filter: 'grayscale(1)' }} title={name} />
+        ) : provider === 'taamai' ? (
+          <TaamAIIcon size={20} style={{ filter: 'grayscale(1)' }} />
         ) : (
           <ProviderIcon provider={provider} size={20} type={'mono'} />
         )}
